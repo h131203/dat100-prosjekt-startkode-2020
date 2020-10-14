@@ -1,5 +1,6 @@
 package no.hvl.dat100ptc.oppgave2;
 
+
 import no.hvl.dat100ptc.TODO;
 import no.hvl.dat100ptc.oppgave1.GPSPoint;
 
@@ -16,11 +17,15 @@ public class GPSDataConverter {
 		
 		int secs;
 		int hr, min, sec;
+		hr = Integer.parseInt(timestr.substring(TIME_STARTINDEX, 13));
+		min = Integer.parseInt(timestr.substring(14, 16));
+		sec = Integer.parseInt(timestr.substring(17, 19));
+		
+		secs = hr*60*60+min*60+sec; // omregner til sekunder.
 		
 		// TODO
 		// OPPGAVE - START
-		
-		throw new UnsupportedOperationException(TODO.method());
+		return secs;
 
 		// OPPGAVE - SLUTT
 		
@@ -31,8 +36,17 @@ public class GPSDataConverter {
 		GPSPoint gpspoint;
 
 		// TODO - START ;
+	
 		
-		throw new UnsupportedOperationException(TODO.method());
+		
+		int timeInt = toSeconds(timeStr); 	//må konvertere timestampen 'timeStr' om til sekunder 
+		double latInt = Double.parseDouble(latitudeStr);
+		double longInt = Double.parseDouble(longitudeStr);
+		double elevInt = Double.parseDouble(elevationStr);
+		
+		gpspoint = new GPSPoint(timeInt, latInt, longInt, elevInt);
+		
+		return gpspoint;
 
 		// OPPGAVE - SLUTT ;
 	    

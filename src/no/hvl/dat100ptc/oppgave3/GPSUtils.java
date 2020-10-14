@@ -28,17 +28,27 @@ public class GPSUtils {
 
 		// TODO - START
 
-		throw new UnsupportedOperationException(TODO.method());
+		min = da[0];
+		for (double d: da) {
+			if (d < min) {
+				min = d;
+			}
+		}
+		return min;
 
 		// TODO - SLUT
 
 	}
-
+//returnerner en tabell med alle breddegradene (latitudes) fra gpspunkente i tabellen gpspoints
 	public static double[] getLatitudes(GPSPoint[] gpspoints) {
 
 		// TODO - START
+		double[] latitudes = new double[gpspoints.length];
+		for (int i = 0; i < latitudes.length; i++) {
+			latitudes[i] = gpspoints[i].getLatitude();
+		}
 		
-		throw new UnsupportedOperationException(TODO.method());
+		return latitudes;
 		
 		// TODO - SLUTT
 	}
@@ -47,7 +57,13 @@ public class GPSUtils {
 
 		// TODO - START
 
-		throw new UnsupportedOperationException(TODO.method());
+		double[] longitudes = new double[gpspoints.length];
+		for (int i = 0; i < longitudes.length; i++) {
+			longitudes[i] = gpspoints[i].getLongitude();
+		}
+		
+		return longitudes;
+		
 		
 		// TODO - SLUTT
 
@@ -59,10 +75,23 @@ public class GPSUtils {
 
 		double d;
 		double latitude1, longitude1, latitude2, longitude2;
+		
+		// se formel i oppgaveteksten...
 
 		// TODO - START
 
-		throw new UnsupportedOperationException(TODO.method());
+		latitude1 = gpspoint1.getLatitude() * (Math.PI/180);
+		latitude2 = gpspoint2.getLatitude() * (Math.PI/180);
+		double differanseLat = latitude2-latitude1;
+		longitude1 = gpspoint1.getLongitude() * (Math.PI/180);
+		longitude2 = gpspoint2.getLongitude() * (Math.PI/180);
+		double differanseLong = longitude2 - longitude1;
+		
+		double a = ((Math.sin(differanseLat / 2)) * (Math.sin(differanseLat / 2))) + Math.cos(latitude1)
+		* Math.cos(latitude2) * ((Math.sin(differanseLong / 2)) * (Math.sin(differanseLong / 2)));
+		double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+		d = R * c;
+		return d;
 
 		// TODO - SLUTT
 
@@ -75,7 +104,13 @@ public class GPSUtils {
 
 		// TODO - START
 
-		throw new UnsupportedOperationException(TODO.method());
+		int sec1 = gpspoint1.getTime();
+		int sec2 = gpspoint2.getTime();
+		secs = sec2 - sec1; //tiden fra punkt 1 til punkt 2
+		double distance = distance(gpspoint1, gpspoint2);
+		speed = (distance/secs) *3.6;
+		
+		return speed;
 
 		// TODO - SLUTT
 
@@ -88,12 +123,17 @@ public class GPSUtils {
 
 		// TODO - START
 
-		throw new UnsupportedOperationException(TODO.method());
+		int hours = secs / 3600;
+		int minutes = (secs % 3600) / 60;
+		int seconds = secs % 60;
+		String tid = String.format("%02d"+TIMESEP+"%02d"+TIMESEP+"%02d", hours, minutes, seconds);
+		timestr = String.format("%10s", tid);
+		return timestr;
 		
 		// TODO - SLUTT
 
 	}
-	private static int TEXTWIDTH = 10;
+	private static int TEXTWIDTH = 10; 
 
 	public static String formatDouble(double d) {
 
@@ -101,7 +141,11 @@ public class GPSUtils {
 
 		// TODO - START
 
-		throw new UnsupportedOperationException(TODO.method());
+		 //.2f => floating point (double) setter 2 desimaler
+		str = String.format("%"+TEXTWIDTH+".2f", d);
+		str.replace(',','.'); //hvorfor funker ikke dette? "epected [.], but was [,] ?
+		
+	  	return str;
 
 		// TODO - SLUTT
 		
