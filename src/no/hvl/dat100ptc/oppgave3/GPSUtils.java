@@ -104,11 +104,9 @@ public class GPSUtils {
 
 		// TODO - START
 
-		int sec1 = gpspoint1.getTime();
-		int sec2 = gpspoint2.getTime();
-		secs = sec2 - sec1; //tiden fra punkt 1 til punkt 2
+		secs = gpspoint2.getTime() - gpspoint1.getTime(); //tiden fra punkt 1 til punkt 2
 		double distance = distance(gpspoint1, gpspoint2);
-		speed = (distance/secs) *3.6;
+		speed = (distance/secs) *3.6; //kmh
 		
 		return speed;
 
@@ -142,10 +140,17 @@ public class GPSUtils {
 		// TODO - START
 
 		 //.2f => floating point (double) setter 2 desimaler
-		str = String.format("%"+TEXTWIDTH+".2f", d);
-		str.replace(',','.'); //hvorfor funker ikke dette? "epected [.], but was [,] ?
+		//str = String.format("%"+TEXTWIDTH+".2f", d);
+		//str.replace(',','.'); //feiler.. ?
 		
-	  	return str;
+	  	//return str;
+	
+	 		d = d*100;
+	 		d = Math.round(d);
+	 		d = (d/100);
+	 		String s = Double.toString(d);
+	 		return str = String.format("%10s", s);
+	 	
 
 		// TODO - SLUTT
 		
